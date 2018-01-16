@@ -1,21 +1,15 @@
-var events = require('events')
-var inherits = require('inherits')
-
 module.exports = LRU
 
 function LRU (opts) {
   if (!(this instanceof LRU)) return new LRU(opts)
   if (typeof opts === 'number') opts = {max: opts}
   if (!opts) opts = {}
-  events.EventEmitter.call(this)
   this.cache = {}
   this.head = this.tail = null
   this.length = 0
   this.max = opts.max || 1000
   this.maxAge = opts.maxAge || 0
 }
-
-inherits(LRU, events.EventEmitter)
 
 Object.defineProperty(LRU.prototype, 'keys', {
   get: function () { return Object.keys(this.cache) }
@@ -101,7 +95,6 @@ LRU.prototype.set = function (key, value) {
 LRU.prototype._checkAge = function (key, element) {
   if (this.maxAge && (Date.now() - element.modified) > this.maxAge) {
     this.remove(key)
-    this.emit('evict', {key: key, value: element.value})
     return false
   }
   return true
@@ -139,7 +132,5 @@ LRU.prototype.get = function (key) {
 
 LRU.prototype.evict = function () {
   if (!this.tail) return
-  var key = this.tail
-  var value = this.remove(this.tail)
-  this.emit('evict', {key: key, value: value})
+  this.remove(this.tail)
 }

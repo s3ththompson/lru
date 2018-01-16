@@ -1,22 +1,23 @@
-# lru
+# nanolru [![stability][0]][1]
+[![npm version][2]][3] [![build status][4]][5]
+[![downloads][8]][9] [![js-standard-style][10]][11]
 
 **A simple LRU cache supporting O(1) set, get and eviction of old keys**
+
+Fork of [`lru`](https://github.com/chriso/lru) to remove dependency on `events`.
 
 ## Installation
 
 ```bash
-$ npm install lru
+$ npm install nanolru
 ```
 
 ### Example
 
 ```javascript
-var LRU = require('lru');
+var LRU = require('nanolru');
 
-var cache = new LRU(2),
-    evicted
-
-cache.on('evict',function(data) { evicted = data });
+var cache = new LRU(2)
 
 cache.set('foo', 'bar');
 cache.get('foo'); //=> bar
@@ -24,14 +25,14 @@ cache.get('foo'); //=> bar
 cache.set('foo2', 'bar2');
 cache.get('foo2'); //=> bar2
 
-cache.set('foo3', 'bar3'); // => evicted = { key: 'foo', value: 'bar' }
+cache.set('foo3', 'bar3'); // 'foo' evicted
 cache.get('foo3');         // => 'bar3'
 cache.remove('foo2')       // => 'bar2'
 cache.remove('foo4')       // => undefined
 cache.length               // => 1
 cache.keys                 // => ['foo3']
 
-cache.clear()              // => it will NOT emit the 'evict' event
+cache.clear()
 cache.length               // => 0
 cache.keys                 // => []
 ```
@@ -85,17 +86,24 @@ Remove the value from the cache.
 **Returns**: value of key if found; `undefined` otherwise.
 
 ##### `.clear()`
-Clear the cache. This method does **NOT** emit the `evict` event.
-
-##### `.on( event, callback )`
-Respond to events. Currently only the `evict` event is implemented. When a key is evicted, the callback is executed with an associative array containing the evicted key: `{key: key, value: value}`.
-
+Clear the cache.
 
 ### Credits
 
-A big thanks to [Dusty Leary](https://github.com/dustyleary) who
+Original library by [Chris O'Hara](https://github.com/chriso). A big thanks to [Dusty Leary](https://github.com/dustyleary) who
 finished the library.
 
 ### License
 
 MIT
+
+[0]: https://img.shields.io/badge/stability-stable-green.svg?style=flat-square
+[1]: https://nodejs.org/api/documentation.html#documentation_stability_index
+[2]: https://img.shields.io/npm/v/nanolru.svg?style=flat-square
+[3]: https://npmjs.org/package/nanolru
+[4]: https://img.shields.io/travis/s3ththompson/nanolru/master.svg?style=flat-square
+[5]: https://travis-ci.org/s3ththompson/nanolru
+[8]: http://img.shields.io/npm/dm/nanolru.svg?style=flat-square
+[9]: https://npmjs.org/package/nanolru
+[10]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
+[11]: https://github.com/feross/standard

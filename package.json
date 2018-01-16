@@ -1,16 +1,13 @@
 {
-  "name": "lru",
+  "name": "nanolru",
   "description": "A simple O(1) LRU cache",
-  "version": "3.1.0",
-  "author": "Chris O'Hara <cohara87@gmail.com>",
+  "version": "1.0.0",
+  "author": "Seth Thompson <s3th.thompson@gmail.com>",
   "main": "index",
-  "homepage": "http://github.com/chriso/lru",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/chriso/lru.git"
-  },
+  "homepage": "http://github.com/s3ththompson/nanolru",
+  "repository": "s3ththompson/nanolru",
   "bugs": {
-    "url": "http://github.com/chriso/lru/issues"
+    "url": "http://github.com/s3ththompson/nanolru/issues"
   },
   "engines": {
     "node": ">= 0.4.0"
@@ -22,8 +19,5 @@
   },
   "scripts": {
     "test": "standard && vows test/*.js --spec"
-  },
-  "dependencies": {
-    "inherits": "^2.0.1"
   }
 }
